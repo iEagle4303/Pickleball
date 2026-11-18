@@ -1,4 +1,25 @@
+/** Error details included by an unsuccessful API response. */
+export interface ApiErrorBody {
+  /** Displayable backend validation, authorization, or application error. */
+  message: string;
+}
+/** Typed transport envelope consumed by the shared HTTP client. */
+export interface ApiEnvelope<T> {
+  /** Response value read only after a successful HTTP status. */
+  data: T;
+  /** Error details read when the backend returns an unsuccessful status. */
+  error?: ApiErrorBody;
+}
+/**
+ * API transport failure carrying the HTTP response status and a displayable message.
+ */
 export class ApiError extends Error {
+  /**
+   * Creates an API failure with its displayable message and HTTP status.
+   *
+   * @param message - Human-readable text displayed to the user.
+   * @param status - HTTP status associated with the failed API response.
+   */
   constructor(
     message: string,
     public status: number,
@@ -6,6 +27,15 @@ export class ApiError extends Error {
     super(message);
   }
 }
+/**
+ * Sends a same-origin API request, unwraps its data envelope, and reports unsuccessful responses.
+ *
+ * @typeParam T - Data type supplied by the loader or API response.
+ * @param path - API route relative to /api.
+ * @param options - Fetch settings merged with same-origin cookie handling and JSON headers.
+ * @returns The response data converted to the requested generic type.
+ * @throws {ApiError} If the API response is unsuccessful or cannot be read.
+ */
 export async function http<T>(
   path: string,
   options: RequestInit = {},
@@ -18,7 +48,7 @@ export async function http<T>(
       ...options.headers,
     },
   });
-  let result: { data: T; error?: { message: string } };
+  let result: ApiEnvelope<T>;
   try {
     result = await response.json();
   } catch {
@@ -34,4 +64,11 @@ export async function http<T>(
     );
   return result.data;
 }
-export const jsonBody = (value: unknown) => JSON.stringify(value);
+/**
+ * Serializes an API request payload to JSON without changing authentication or transport settings.
+ *
+ * @param value - Payload or value to serialize, format, or submit.
+ * @returns The JSON string, or undefined for values JSON.stringify cannot serialize at the root.
+ */
+export const jsonBody = (value: unknown): string | undefined =>
+  JSON.stringify(value);

@@ -1,35 +1,50 @@
-import type {
-  UnitOfWork,
-  ReadRepositories,
-} from "../../repositories/interfaces/UnitOfWork.js";
-import type { RankedTeam } from "../../types/entities.js";
+import type { RankingStore } from "../../store/rankingStore.js";
+import type { TeamMembers } from "../../store/types.js";
+import type { Team, Game, RankedTeam } from "../../types/entities.js";
 import { defaultRanking } from "./algorithms/defaultRanking.js";
-import { requireTournament } from "../shared/records.js";
+import { ensure } from "../errors.js";
 // Change only this selection to replace the ranking algorithm.
 const algorithm = defaultRanking;
-/** May share a read context with home/matchups to keep the response consistent. */
-export async function getRankings(
-  repositories: ReadRepositories,
-  tournamentID: number,
-): Promise<RankedTeam[]> {
-  await requireTournament(repositories.tournaments, tournamentID);
-  const [teams, games] = await Promise.all([
-    repositories.teams.listForTournament(tournamentID),
-    repositories.games.list({ tournamentID }),
-  ]);
-  const ranked = algorithm.rank(teams, games);
-  return Promise.all(
-    ranked.map(async (row) => ({
-      ...row,
-      players: await repositories.teams.listMembers(row.team.teamID),
-    })),
-  );
-}
+/**
+ * Loads tournament inputs and applies the selected storage-independent ranking algorithm.
+ */
 export class RankingService {
-  constructor(private readonly work: UnitOfWork) {}
-  list(tournamentID: number) {
-    return this.work.query((repositories) =>
-      getRankings(repositories, tournamentID),
+  /**
+   * Creates the RankingService with its required dependencies.
+   *
+   * @param store - Dedicated feature-store dependency, scoped when used inside a transaction.
+   */
+  constructor(private readonly store: RankingStore) {}
+  /**
+   * Loads a tournament's inputs and returns its calculated leaderboard.
+   *
+   * @param tournamentID - Primary key of the tournament.
+   * @returns An array of calculated leaderboard row with current public players and statistics.
+   * @throws {HttpError} If the tournament does not exist.
+   */
+  async list(tournamentID: number): Promise<RankedTeam[]> {
+    const data = await this.store.getCompetition(tournamentID);
+    ensure(data, 404, "Tournament not found.");
+    return this.calculate(data.teams, data.games, data.members);
+  }
+  /**
+   * Applies the selected ranking algorithm and attaches current public rosters without accessing storage.
+   *
+   * @param teams - Tournament teams to rank without mutating the input collection.
+   * @param games - Completed results scoped to the tournament.
+   * @param members - Public rosters indexed by their associated team IDs.
+   * @returns An array of calculated leaderboard row with current public players and statistics.
+   */
+  calculate(
+    teams: readonly Team[],
+    games: readonly Game[],
+    members: readonly TeamMembers[],
+  ): RankedTeam[] {
+    const players = new Map(
+      members.map((member) => [member.teamID, member.players]),
     );
+    return algorithm
+      .rank(teams, games)
+      .map((row) => ({ ...row, players: players.get(row.team.teamID) ?? [] }));
   }
 }

@@ -6,7 +6,13 @@ import {
 } from "../middleware/auth.js";
 import { endpoint } from "../controllers/leagueController.js";
 import { parseID } from "../services/validation.js";
-export function createUserRoutes(users: UserService) {
+/**
+ * Creates the user router and applies its authentication and permission requirements.
+ *
+ * @param users - Service dependency handling this resource.
+ * @returns An Express router containing the resource's supported endpoints.
+ */
+export function createUserRoutes(users: UserService): Router {
   const router = Router();
   router.get(
     "/",
@@ -23,7 +29,9 @@ export function createUserRoutes(users: UserService) {
   router.put(
     "/:id/permissions",
     permit("MANAGE_PERMISSIONS"),
-    endpoint((req) => users.setPermissions(parseID(req.params.id), req.body)),
+    endpoint((req) =>
+      users.setPermissions(parseID(req.params.id), req.body?.permissionIDs),
+    ),
   );
   return router;
 }

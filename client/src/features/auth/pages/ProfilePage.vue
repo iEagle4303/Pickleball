@@ -23,7 +23,12 @@ const { loading, error, reload } = useResource(async () => {
   Object.assign(draft, auth.user);
   return auth.user;
 });
-async function save() {
+/**
+ * Saves editable profile fields and updates the shared signed-in account.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function save(): Promise<void> {
   busy.value = true;
   savingError.value = "";
   try {
@@ -35,7 +40,12 @@ async function save() {
     busy.value = false;
   }
 }
-async function logout() {
+/**
+ * Ends the session and returns the member to the clubhouse.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function logout(): Promise<void> {
   busy.value = true;
   try {
     await auth.logout();

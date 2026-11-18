@@ -1,7 +1,21 @@
-import type { UnitOfWork } from "../../repositories/interfaces/UnitOfWork.js";
+import type { Permission } from "../../types/entities.js";
+import type { PermissionStore } from "../../store/permissionStore.js";
+/**
+ * Provides the permission catalog through PermissionStore.
+ */
 export class PermissionService {
-  constructor(private readonly work: UnitOfWork) {}
-  list() {
-    return this.work.query((repositories) => repositories.permissions.list());
+  /**
+   * Creates the PermissionService with its required dependencies.
+   *
+   * @param store - Dedicated feature-store dependency, scoped when used inside a transaction.
+   */
+  constructor(private readonly store: PermissionStore) {}
+  /**
+   * Returns the permission catalog available to authorized coordinators.
+   *
+   * @returns An array of permission catalog record.
+   */
+  list(): Promise<Permission[]> {
+    return this.store.list();
   }
 }

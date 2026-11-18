@@ -1,13 +1,13 @@
 import { createApp } from "./app.js";
 import { config } from "./config.js";
-import { JsonFileStore } from "./repositories/json/JsonFileStore.js";
-import { JsonUnitOfWork } from "./repositories/json/JsonUnitOfWork.js";
+import { JsonFileStore } from "./store/json/JsonFileStore.js";
+import { createJsonStores } from "./store/createStores.js";
 import { createSeedData } from "./seedData.js";
-// Storage composition belongs here; services and routes depend only on interfaces.
-const store = new JsonFileStore(config.dataFile);
-await store.initialize(createSeedData);
-const work = new JsonUnitOfWork(store);
-const app = createApp(work, {
+const file = new JsonFileStore(config.dataFile);
+await file.initialize(createSeedData);
+// Replace this factory with SQL stores when a SQL backend is introduced.
+const stores = createJsonStores(file);
+const app = createApp(stores, {
   origin: config.origin,
   production: config.production,
   clientDist:

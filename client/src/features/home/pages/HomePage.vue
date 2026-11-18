@@ -25,7 +25,12 @@ const data = ref<HomeData>();
 const loading = ref(true);
 const error = ref("");
 const auth = useAuthStore();
-async function load() {
+/**
+ * Loads clubhouse data and updates the loading and error states.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function load(): Promise<void> {
   loading.value = true;
   error.value = "";
   try {
@@ -170,8 +175,11 @@ onMounted(load);
           class="panel p-4 sm:p-5"
         >
           <div class="flex items-center justify-between gap-2">
-            <span class="text-xs text-muted">{{ stat.label }}</span
-            ><component :is="stat.icon" :size="17" class="text-muted" />
+            <span class="text-xs text-muted">{{ stat.label }}</span><component
+              :is="stat.icon"
+              :size="17"
+              class="text-muted"
+            />
           </div>
           <p class="mb-1 mt-3 text-3xl font-semibold tracking-tight">
             {{ stat.value }}

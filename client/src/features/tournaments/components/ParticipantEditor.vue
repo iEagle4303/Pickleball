@@ -17,7 +17,12 @@ const selected = ref<number[]>([]);
 const loading = ref(false);
 const busy = ref(false);
 const error = ref("");
-async function load() {
+/**
+ * Loads teams available for tournament participation management.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function load(): Promise<void> {
   loading.value = true;
   error.value = "";
   try {
@@ -37,7 +42,12 @@ watch(
     }
   },
 );
-async function save() {
+/**
+ * Saves participating team IDs and notifies the tournament page.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function save(): Promise<void> {
   busy.value = true;
   error.value = "";
   try {

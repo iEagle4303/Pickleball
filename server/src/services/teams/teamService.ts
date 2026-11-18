@@ -1,123 +1,175 @@
-import type { UnitOfWork } from "../../repositories/interfaces/UnitOfWork.js";
-import type { AuthUser, Team, TeamDetails } from "../../types/entities.js";
+import type { TeamView, TeamDetails } from "../../types/entities.js";
+import type { TeamStore } from "../../store/teamStore.js";
 import { ensure } from "../errors.js";
 import { teamSchema, membershipSchema } from "../validation.js";
-import { requireTeam, requireUser } from "../shared/records.js";
-import { teamView } from "../mappers/teamView.js";
-import { tournamentView } from "../mappers/tournamentView.js";
-import { gameView } from "../mappers/gameView.js";
+/**
+ * Coordinates team creation, editing, and doubles-roster rules through TeamStore.
+ */
 export class TeamService {
-  constructor(private readonly work: UnitOfWork) {}
-  list() {
-    return this.work.query(async (repositories) => {
-      const teams = await repositories.teams.list();
-      return Promise.all(teams.map((team) => teamView(repositories, team)));
-    });
+  /**
+   * Creates the TeamService with its required dependencies.
+   *
+   * @param store - Dedicated feature-store dependency, scoped when used inside a transaction.
+   */
+  constructor(private readonly store: TeamStore) {}
+  /**
+   * Lists all teams with their rosters and aggregate records.
+   *
+   * @returns An array of team identity, public roster, and aggregate game statistics.
+   */
+  list(): Promise<TeamView[]> {
+    return this.store.list();
   }
-  get(teamID: number): Promise<TeamDetails> {
-    return this.work.query(async (repositories) => {
-      const team = await requireTeam(repositories.teams, teamID);
-      const [view, tournaments, games] = await Promise.all([
-        teamView(repositories, team),
-        repositories.tournaments.listForTeam(teamID),
-        repositories.games.list({ teamID }),
-      ]);
-      return {
-        ...view,
-        tournaments: await Promise.all(
-          tournaments.map((tournament) =>
-            tournamentView(repositories, tournament),
-          ),
-        ),
-        games: await Promise.all(
-          games.map((game) => gameView(repositories, game)),
-        ),
-      };
-    });
+  /**
+   * Loads one team's profile, members, tournament appearances, and game history.
+   *
+   * @param teamID - Primary key of the team.
+   * @returns Team profile, roster, tournament appearances, and completed-game history.
+   * @throws {HttpError} If the team does not exist.
+   */
+  async get(teamID: number): Promise<TeamDetails> {
+    const team = await this.store.getDetails(teamID);
+    ensure(team, 404, "Team not found.");
+    return team;
   }
-  create(input: unknown, actor: AuthUser) {
-    return this.save(input, actor);
-  }
-  update(teamID: number, input: unknown, actor: AuthUser) {
-    return this.save(input, actor, teamID);
-  }
-  private canManage(actor: AuthUser, team: Team) {
-    return (
-      actor.permissions.includes("MANAGE_TEAMS") ||
-      team.createdByUserID === actor.userID
-    );
-  }
-  private save(input: unknown, actor: AuthUser, teamID?: number) {
+  /**
+   * Validates the creator and name, then creates the team and first membership atomically.
+   *
+   * @param input - Request fields to validate before applying the operation.
+   * @param createdByUserID - User ID recorded as the team's creator.
+   * @returns Team identity, public roster, and aggregate game statistics.
+   * @throws {HttpError} If the creator is missing or the team name is already in use.
+   * @throws {ZodError} If the submitted fields or ID list fail validation.
+   */
+  create(input: unknown, createdByUserID: number): Promise<TeamView> {
     const value = teamSchema.parse(input);
-    return this.work.transaction(async (repositories) => {
-      if (teamID !== undefined) {
-        const team = await requireTeam(repositories.teams, teamID);
-        ensure(
-          this.canManage(actor, team),
-          403,
-          "Only the team creator or a team administrator may edit this team.",
-        );
-      } else {
-        await requireUser(repositories.users, actor.userID);
-      }
-      const existing = await repositories.teams.findByName(value.name);
+    return this.store.transaction(async (store) => {
+      ensure(await store.userExists(createdByUserID), 404, "User not found.");
+      ensure(
+        !(await store.findByName(value.name)),
+        409,
+        "A team with this name already exists.",
+      );
+      const team = await store.createTeam(
+        value.name,
+        value.color,
+        createdByUserID,
+      );
+      await store.addMember(team.teamID, createdByUserID);
+      return store.getView(team.teamID);
+    });
+  }
+  /**
+   * Checks ownership or team-management permission before changing team details.
+   *
+   * @param teamID - Primary key of the team.
+   * @param input - Request fields to validate before applying the operation.
+   * @param actorUserID - Signed-in user ID used for ownership checks.
+   * @param canManageTeams - Whether the signed-in user has MANAGE_TEAMS permission.
+   * @returns Team identity, public roster, and aggregate game statistics.
+   * @throws {HttpError} If the team is missing, the caller cannot edit it, or the name is already in use.
+   * @throws {ZodError} If the submitted fields or ID list fail validation.
+   */
+  update(
+    teamID: number,
+    input: unknown,
+    actorUserID: number,
+    canManageTeams: boolean,
+  ): Promise<TeamView> {
+    const value = teamSchema.parse(input);
+    return this.store.transaction(async (store) => {
+      const team = await store.getTeam(teamID);
+      ensure(team, 404, "Team not found.");
+      ensure(
+        canManageTeams || team.createdByUserID === actorUserID,
+        403,
+        "Only the team creator or a team administrator may edit this team.",
+      );
+      const existing = await store.findByName(value.name);
       ensure(
         !existing || existing.teamID === teamID,
         409,
         "A team with this name already exists.",
       );
-      const team =
-        teamID === undefined
-          ? await repositories.teams.create({
-              ...value,
-              createdByUserID: actor.userID,
-            })
-          : await repositories.teams.update(teamID, value);
-      if (teamID === undefined)
-        await repositories.teams.addMember(team.teamID, actor.userID);
-      return teamView(repositories, team);
+      await store.updateTeam(teamID, value.name, value.color);
+      return store.getView(teamID);
     });
   }
-  addMember(teamID: number, input: unknown, actor: AuthUser) {
-    const { userID } = membershipSchema.parse(input);
-    return this.work.transaction(async (repositories) => {
-      const team = await requireTeam(repositories.teams, teamID);
+  /**
+   * Checks authorization, membership uniqueness, and doubles capacity before adding a player.
+   *
+   * @param teamID - Primary key of the team.
+   * @param userID - Primary key of the user.
+   * @param actorUserID - Signed-in user ID used for ownership checks.
+   * @param canManageTeams - Whether the signed-in user has MANAGE_TEAMS permission.
+   * @returns Team identity, public roster, and aggregate game statistics.
+   * @throws {HttpError} If authorization fails, a record is missing, the member already joined, or the doubles roster is full.
+   */
+  addMember(
+    teamID: number,
+    userID: unknown,
+    actorUserID: number,
+    canManageTeams: boolean,
+  ): Promise<TeamView> {
+    const memberUserID = membershipSchema.shape.userID.parse(userID);
+    return this.store.transaction(async (store) => {
+      const team = await store.getTeam(teamID);
+      ensure(team, 404, "Team not found.");
       ensure(
-        userID === actor.userID || this.canManage(actor, team),
+        memberUserID === actorUserID ||
+          canManageTeams ||
+          team.createdByUserID === actorUserID,
         403,
         "You cannot add another player to this team.",
       );
-      await requireUser(repositories.users, userID);
+      ensure(await store.userExists(memberUserID), 404, "User not found.");
       ensure(
-        !(await repositories.teams.hasMember(teamID, userID)),
+        !(await store.hasMember(teamID, memberUserID)),
         409,
         "This player is already on the team.",
       );
-      const members = await repositories.teams.listMembers(teamID);
       ensure(
-        members.length < 2,
+        (await store.countMembers(teamID)) < 2,
         409,
         "This doubles team already has two players.",
       );
-      await repositories.teams.addMember(teamID, userID);
-      return teamView(repositories, team);
+      await store.addMember(teamID, memberUserID);
+      return store.getView(teamID);
     });
   }
-  removeMember(teamID: number, userID: number, actor: AuthUser) {
-    return this.work.transaction(async (repositories) => {
-      const team = await requireTeam(repositories.teams, teamID);
+  /**
+   * Checks authorization and the exact membership before removing a player.
+   *
+   * @param teamID - Primary key of the team.
+   * @param userID - Primary key of the user.
+   * @param actorUserID - Signed-in user ID used for ownership checks.
+   * @param canManageTeams - Whether the signed-in user has MANAGE_TEAMS permission.
+   * @returns Team identity, public roster, and aggregate game statistics.
+   * @throws {HttpError} If authorization fails or the team/membership does not exist.
+   */
+  removeMember(
+    teamID: number,
+    userID: number,
+    actorUserID: number,
+    canManageTeams: boolean,
+  ): Promise<TeamView> {
+    return this.store.transaction(async (store) => {
+      const team = await store.getTeam(teamID);
+      ensure(team, 404, "Team not found.");
       ensure(
-        userID === actor.userID || this.canManage(actor, team),
+        userID === actorUserID ||
+          canManageTeams ||
+          team.createdByUserID === actorUserID,
         403,
         "You cannot remove this player.",
       );
       ensure(
-        await repositories.teams.hasMember(teamID, userID),
+        await store.hasMember(teamID, userID),
         404,
         "Membership not found.",
       );
-      await repositories.teams.removeMember(teamID, userID);
-      return teamView(repositories, team);
+      await store.removeMember(teamID, userID);
+      return store.getView(teamID);
     });
   }
 }

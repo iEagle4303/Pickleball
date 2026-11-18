@@ -20,7 +20,12 @@ const pair = ref<Matchup>();
 const { data, loading, error, reload } = useResource(() =>
   matchupApi.get(props.tournamentID),
 );
-async function regenerate() {
+/**
+ * Requests the next pairing round and updates the displayed matchups.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function regenerate(): Promise<void> {
   busy.value = true;
   try {
     data.value = await matchupApi.regenerate(
@@ -102,8 +107,7 @@ async function regenerate() {
         >
           <span class="text-[10px] text-muted">{{
             item.recentlyPlayed ? "A familiar rivalry" : "A fresh matchup"
-          }}</span
-          ><button
+          }}</span><button
             v-if="auth.can('ADD_GAME_RESULT')"
             class="flex items-center gap-1 text-xs font-semibold"
             @click="
@@ -122,8 +126,9 @@ async function regenerate() {
       description="A tournament needs at least two teams to suggest a matchup."
     />
     <div v-if="data?.bye" class="panel mt-5 p-5 text-sm">
-      <span class="font-semibold">{{ data.bye.team.name }}</span
-      ><span class="text-muted">
+      <span class="font-semibold">{{ data.bye.team.name }}</span><span
+        class="text-muted"
+      >
         has a bye this round. They'll be back in the mix next time.</span
       >
     </div>

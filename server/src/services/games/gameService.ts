@@ -1,68 +1,111 @@
-import type { UnitOfWork } from "../../repositories/interfaces/UnitOfWork.js";
-import type { GameFilters } from "../../repositories/interfaces/GameRepository.js";
+import type { GameView } from "../../types/entities.js";
+import type { GameStore } from "../../store/gameStore.js";
 import { ensure } from "../errors.js";
 import { gameSchema } from "../validation.js";
-import {
-  requireGame,
-  requireTeam,
-  requireTournament,
-} from "../shared/records.js";
-import { gameView } from "../mappers/gameView.js";
+/**
+ * Validates completed game results and coordinates result persistence through GameStore.
+ */
 export class GameService {
-  constructor(private readonly work: UnitOfWork) {}
-  list(filters: GameFilters = {}) {
-    return this.work.query(async (repositories) => {
-      if (filters.tournamentID !== undefined)
-        await requireTournament(repositories.tournaments, filters.tournamentID);
-      if (filters.teamID !== undefined)
-        await requireTeam(repositories.teams, filters.teamID);
-      const games = await repositories.games.list(filters);
-      return Promise.all(games.map((game) => gameView(repositories, game)));
+  /**
+   * Creates the GameService with its required dependencies.
+   *
+   * @param store - Dedicated feature-store dependency, scoped when used inside a transaction.
+   */
+  constructor(private readonly store: GameStore) {}
+  /**
+   * Lists completed results, optionally scoped by tournament ID and team ID.
+   *
+   * @param tournamentID - Primary key of the tournament.
+   * @param teamID - Primary key of the team.
+   * @returns Joined game views ordered by playedAt descending, then gameID descending.
+   * @throws {HttpError} If a supplied tournament or team ID does not exist.
+   */
+  list(tournamentID?: number, teamID?: number): Promise<GameView[]> {
+    return this.store.read(async (store) => {
+      if (tournamentID !== undefined)
+        ensure(
+          await store.getTournament(tournamentID),
+          404,
+          "Tournament not found.",
+        );
+      if (teamID !== undefined)
+        ensure(await store.teamExists(teamID), 404, "Team not found.");
+      return store.list(tournamentID, teamID);
     });
   }
-  create(input: unknown) {
+  /**
+   * Creates a completed result after validating scores and tournament participation.
+   *
+   * @param input - Request fields to validate before applying the operation.
+   * @returns Completed result joined to the winner, loser, and tournament.
+   * @throws {HttpError} If teams or the tournament are missing, either team is not participating, or the result is future-dated/upcoming.
+   * @throws {ZodError} If the submitted fields or ID list fail validation.
+   */
+  create(input: unknown): Promise<GameView> {
     return this.save(input);
   }
-  update(gameID: number, input: unknown) {
+  /**
+   * Updates an existing result after applying the same rules as result creation.
+   *
+   * @param gameID - Primary key of the completed game.
+   * @param input - Request fields to validate before applying the operation.
+   * @returns Completed result joined to the winner, loser, and tournament.
+   * @throws {HttpError} If the game is missing or the result's teams, tournament, participation, or time are invalid.
+   * @throws {ZodError} If the submitted fields or ID list fail validation.
+   */
+  update(gameID: number, input: unknown): Promise<GameView> {
     return this.save(input, gameID);
   }
-  private save(input: unknown, gameID?: number) {
+  /**
+   * Validates result fields, completion time, teams, and tournament membership before persistence.
+   *
+   * @param input - Request fields to validate before applying the operation.
+   * @param gameID - Primary key of the completed game.
+   * @returns Completed result joined to the winner, loser, and tournament.
+   * @throws {HttpError} If required records, tournament participation, status, or completion time are invalid.
+   * @throws {ZodError} If the submitted fields or ID list fail validation.
+   */
+  private save(input: unknown, gameID?: number): Promise<GameView> {
     const value = gameSchema.parse(input);
     ensure(
       new Date(value.playedAt).getTime() <= Date.now() + 60000,
       400,
       "A completed game cannot be dated in the future.",
     );
-    return this.work.transaction(async (repositories) => {
-      if (gameID !== undefined) await requireGame(repositories.games, gameID);
-      const tournament = await requireTournament(
-        repositories.tournaments,
-        value.tournamentID,
-      );
+    return this.store.transaction(async (store) => {
+      if (gameID !== undefined)
+        ensure(await store.getGame(gameID), 404, "Game not found.");
+      const tournament = await store.getTournament(value.tournamentID);
+      ensure(tournament, 404, "Tournament not found.");
       ensure(
         tournament.status !== "upcoming",
         400,
         "Start the tournament before entering results.",
       );
       for (const teamID of [value.winnerTeamID, value.loserTeamID]) {
-        await requireTeam(repositories.teams, teamID);
+        ensure(await store.teamExists(teamID), 404, "Team not found.");
         ensure(
-          await repositories.tournaments.hasTeam(value.tournamentID, teamID),
+          await store.tournamentHasTeam(value.tournamentID, teamID),
           400,
           "Both teams must belong to this tournament.",
         );
       }
-      const game =
-        gameID === undefined
-          ? await repositories.games.create(value)
-          : await repositories.games.update(gameID, value);
-      return gameView(repositories, game);
+      return gameID === undefined
+        ? store.createGame(value)
+        : store.updateGame(gameID, value);
     });
   }
-  remove(gameID: number) {
-    return this.work.transaction(async (repositories) => {
-      await requireGame(repositories.games, gameID);
-      await repositories.games.remove(gameID);
+  /**
+   * Removes an existing result so subsequent rankings use the remaining games.
+   *
+   * @param gameID - Primary key of the completed game.
+   * @returns Null acknowledging successful deletion; a missing record throws rather than returning null.
+   * @throws {HttpError} If the game does not exist.
+   */
+  remove(gameID: number): Promise<null> {
+    return this.store.transaction(async (store) => {
+      ensure(await store.getGame(gameID), 404, "Game not found.");
+      await store.removeGame(gameID);
       return null;
     });
   }

@@ -19,7 +19,12 @@ const busy = ref(false);
 const error = ref("");
 const visible = ref(false);
 const development = import.meta.env.DEV;
-async function submit() {
+/**
+ * Registers or signs in the member and displays any API validation error.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function submit(): Promise<void> {
   busy.value = true;
   error.value = "";
   try {

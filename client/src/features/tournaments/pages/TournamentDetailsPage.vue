@@ -44,7 +44,13 @@ const { data, loading, error, reload } = useResource(async () => {
 });
 const tab = ref("Overview");
 const tabs = ["Overview", "Rankings", "Teams", "Games", "Matchups"];
-function moveTab(event: KeyboardEvent) {
+/**
+ * Moves focus and selection through tournament tabs using the arrow, Home, and End keys.
+ *
+ * @param event - Keyboard event used to close navigation or move between tabs.
+ * @returns No result value.
+ */
+function moveTab(event: KeyboardEvent): void {
   let index = tabs.indexOf(tab.value);
   if (event.key === "ArrowRight") index = (index + 1) % tabs.length;
   else if (event.key === "ArrowLeft")
@@ -62,7 +68,13 @@ const edit = ref(false);
 const participants = ref(false);
 const gameEditor = ref(false);
 const editedGame = ref<GameView>();
-async function removeGame(game: GameView) {
+/**
+ * Confirms and deletes a result, then reloads the tournament details.
+ *
+ * @param game - Completed game selected for editing or deletion.
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function removeGame(game: GameView): Promise<void> {
   if (
     !(await confirmAction(
       "Delete this result?",
@@ -78,7 +90,12 @@ async function removeGame(game: GameView) {
     notify(errorMessage(e), "error");
   }
 }
-async function removeTournament() {
+/**
+ * Confirms and deletes an eligible tournament, then returns to the tournament list.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function removeTournament(): Promise<void> {
   if (
     !(await confirmAction(
       "Delete tournament?",

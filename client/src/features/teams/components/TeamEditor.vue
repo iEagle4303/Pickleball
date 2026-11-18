@@ -20,7 +20,12 @@ watch(
     }
   },
 );
-async function save() {
+/**
+ * Submits team details and notifies the parent when the team has been saved.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function save(): Promise<void> {
   busy.value = true;
   error.value = "";
   try {

@@ -1,7 +1,13 @@
 import type { Tournament } from "./types/entities.js";
-import type { JsonDatabase } from "./repositories/json/JsonDatabase.js";
+import type { JsonDatabase } from "./store/json/JsonDatabase.js";
 import { permissionNames } from "./types/entities.js";
 import { hashPassword } from "./services/auth/passwords.js";
+/**
+ * Builds valid development records and relationships with independently salted password hashes.
+ *
+ * @param password - Plaintext password used only for hashing or verification.
+ * @returns Fresh parsed JSON document containing all development tables.
+ */
 export async function createSeedData(
   password = process.env.SEED_PASSWORD || "Clubhouse2026!",
 ): Promise<JsonDatabase> {
@@ -75,6 +81,18 @@ export async function createSeedData(
     ][index],
     createdByUserID: index * 2 + 1,
   }));
+  /**
+   * Builds a ladder tournament record for the development seed.
+   *
+   * @param tournamentID - Primary key of the tournament.
+   * @param name - Display name or case-insensitive team name to look up.
+   * @param semester - Semester label stored on the seeded tournament.
+   * @param status - HTTP status to report if the operation fails.
+   * @param startDate - Tournament start date in YYYY-MM-DD format.
+   * @param endDate - Tournament end date in YYYY-MM-DD format.
+   * @param parentTournamentID - Parent tournament ID, or null for a standalone seeded competition.
+   * @returns Tournament identity, format, semester, dates, and hierarchy fields.
+   */
   const make = (
     tournamentID: number,
     name: string,
@@ -169,7 +187,12 @@ export async function createSeedData(
     sessions: [],
   };
   let seed = 42;
-  const random = () => {
+  /**
+   * Returns a deterministic pseudo-random fraction for reproducible seeded results.
+   *
+   * @returns A deterministic pseudo-random fraction in the range [0, 1).
+   */
+  const random = (): number => {
     seed = (seed * 1664525 + 1013904223) >>> 0;
     return seed / 4294967296;
   };

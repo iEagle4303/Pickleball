@@ -84,13 +84,20 @@ server/src/
     auth/           # Registration, login, sessions
     users/          # User directory, profile, permission assignment
     permissions/    # Permission catalog
-    mappers/        # API view models from targeted repository queries
-    shared/         # Shared record lookup/404 helpers
     rankings/       # RankingAlgorithm, rankingService, selected algorithm
     matchups/       # MatchupAlgorithm, matchupService, selected algorithm
-  repositories/
-    interfaces/     # Entity repositories plus UnitOfWork
-    json/           # JSON-only storage, IDs, and repository implementations
+  store/            # One data-access store per service
+    authStore.ts    # Accounts and sessions
+    homeStore.ts    # Clubhouse snapshot
+    tournamentStore.ts
+    teamStore.ts
+    gameStore.ts
+    userStore.ts
+    permissionStore.ts
+    rankingStore.ts
+    matchupStore.ts
+    createStores.ts # Select JSON implementations; SQL can be selected later
+    json/           # File I/O, transactions, projections, and JSON-only types
   types/            # Shared entity type re-export
 shared/types.ts     # Entities, join relationships, API view models
 ```
@@ -99,9 +106,9 @@ Every frontend feature owns its API calls inside its own `api/` directory. Vue c
 
 Each route group has a dedicated service. `routes/api.ts` only mounts routers, and `services/createServices.ts` only wires their dependencies. Tournament game, ranking, and matchup subroutes delegate to those dedicated services.
 
-Services depend on the `UnitOfWork` and entity repository interfaces. Read callbacks receive query-only repositories; write callbacks receive repositories scoped to an atomic transaction. Services request specific records, relations, and aggregates instead of reading or mutating a `Database` object. IDs and persistence belong to the adapters.
+Each service receives its own store interface from `server/src/store`. Data-access functions use explicit parameters such as `getTeam(teamID)`, `addMember(teamID, userID)`, and `list(tournamentID, teamID)`. Full game/tournament records remain grouped payloads where that makes the call clearer. Store transaction callbacks receive a scoped instance of the same feature store, not a database document or collection of repositories.
 
-See [the repository boundary and SQL adapter guide](server/src/repositories/README.md) for the migration contract.
+See [the per-service store and SQL migration guide](server/src/store/README.md) for the store contracts and examples.
 
 ### Replacing the ranking algorithm
 
@@ -125,7 +132,7 @@ The tables intentionally share one JSON file so multi-table operations commit at
 
 Run **one API writer process** for this development adapter. A second writer is rejected by the lock rather than silently losing data. After an unclean crash, verify no API process is running before removing a stale `database.json.lock` file. Do not edit the store while the server is running.
 
-For SQL, implement the six entity repository interfaces with targeted queries and implement `UnitOfWork` using a connection and SQL transactions. Replace the JSON adapter construction in `index.ts`. Services and API view models remain unchanged; there is no requirement to load or rewrite all SQL tables. Only the JSON adapter and its seed generator use `JsonDatabase`, which is no longer a shared application type. Backups should include the whole JSON file. Never commit real member information or active session records.
+For SQL, replace the JSON operations in the per-service stores with targeted queries, or implement the same store interfaces and select a SQL store factory in `index.ts`. Bind scoped stores to SQL connections and transactions. Services and API view models remain unchanged; SQL stores need not load or rewrite all tables. Only the JSON store helpers and seed generator use `JsonDatabase`. Backups should include the whole JSON file. Never commit real member information or active session records.
 
 Tournaments with results or children cannot be deleted. Teams with results cannot be removed from the corresponding tournament. Duplicate memberships/participations/permissions and cyclic parent relationships are rejected. Team statistics aggregate recorded results; division games are independent of their parent tournament.
 

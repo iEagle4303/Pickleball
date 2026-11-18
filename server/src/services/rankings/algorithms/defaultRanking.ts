@@ -1,7 +1,15 @@
+import type { Team, Game, RankedTeam } from "../../../types/entities.js";
 import type { RankingAlgorithm } from "../RankingAlgorithm.js";
 /** Placeholder: wins descending, then win percentage descending, then stable numeric team ID. */
 export const defaultRanking: RankingAlgorithm = {
-  rank(teams, games) {
+  /**
+   * Orders teams by wins, then win percentage, then team ID for deterministic ties.
+   *
+   * @param teams - Tournament teams to rank without mutating the input collection.
+   * @param games - Completed results scoped to the tournament.
+   * @returns An array of calculated leaderboard row with current public players and statistics.
+   */
+  rank(teams: readonly Team[], games: readonly Game[]): RankedTeam[] {
     const validIDs = new Set(teams.map((team) => team.teamID));
     const validGames = games.filter(
       (game) =>

@@ -8,8 +8,14 @@ import { createTeamRoutes } from "./teamRoutes.js";
 import { createGameRoutes } from "./gameRoutes.js";
 import { createUserRoutes } from "./userRoutes.js";
 import { createPermissionRoutes } from "./permissionRoutes.js";
-/** Mount route groups. Business logic and data access belong to their services. */
-export function createApi(services: Services, production = false) {
+/**
+ * Mounts authenticated resource routers without performing business rules or data access.
+ *
+ * @param services - Configured resource services injected into this router.
+ * @param production - Whether session cookies must require HTTPS.
+ * @returns An Express router containing the resource's supported endpoints.
+ */
+export function createApi(services: Services, production = false): Router {
   const router = Router();
   router.use(identify(services.auth));
   router.get("/health", (_req, res) => res.json({ data: { status: "ok" } }));

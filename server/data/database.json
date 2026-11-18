@@ -989,6 +989,15 @@
       "scoreLoser": 0,
       "tournamentID": 4,
       "playedAt": "2025-11-06T21:45:00.000Z"
+    },
+    {
+      "winnerTeamID": 3,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 1,
+      "playedAt": "2026-11-18T18:51:00.000Z",
+      "gameID": 81
     }
   ],
   "userTeams": [

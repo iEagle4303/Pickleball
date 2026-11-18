@@ -2,14 +2,21 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import { ZodError } from "zod";
-import type { UnitOfWork } from "./repositories/interfaces/UnitOfWork.js";
+import type { Stores } from "./store/createStores.js";
 import { createServices } from "./services/createServices.js";
 import { createApi } from "./routes/api.js";
 import { HttpError } from "./services/errors.js";
+/**
+ * Creates the Express application, security middleware, route groups, and optional built-client hosting.
+ *
+ * @param stores - Per-service store dependencies selected at startup.
+ * @param options - Application origin, security, and optional static-client configuration.
+ * @returns The configured Express application; this function does not start listening.
+ */
 export function createApp(
-  work: UnitOfWork,
+  stores: Stores,
   options: { origin?: string; production?: boolean; clientDist?: string } = {},
-) {
+): express.Express {
   const app = express();
   app.disable("x-powered-by");
   app.use(helmet());
@@ -31,7 +38,7 @@ export function createApp(
     }
     next();
   });
-  app.use("/api", createApi(createServices(work), options.production));
+  app.use("/api", createApi(createServices(stores), options.production));
   app.use("/api", (_req, _res, next) =>
     next(new HttpError(404, "API endpoint not found.")),
   );

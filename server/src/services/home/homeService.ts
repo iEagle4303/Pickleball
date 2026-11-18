@@ -1,45 +1,43 @@
-import type { UnitOfWork } from "../../repositories/interfaces/UnitOfWork.js";
+import type { HomeStore } from "../../store/homeStore.js";
 import type { HomeData } from "../../types/entities.js";
-import { tournamentView } from "../mappers/tournamentView.js";
-import { gameView } from "../mappers/gameView.js";
-import { getRankings } from "../rankings/rankingService.js";
-import { getMatchups } from "../matchups/matchupService.js";
+import type { RankingService } from "../rankings/rankingService.js";
+import type { MatchupService } from "../matchups/matchupService.js";
+/**
+ * Combines a consistent clubhouse snapshot with calculated rankings and suggested pairings.
+ */
 export class HomeService {
-  constructor(private readonly work: UnitOfWork) {}
-  get(): Promise<HomeData> {
-    return this.work.query(async (repositories) => {
-      const tournaments = await repositories.tournaments.list();
-      const active = tournaments.find(
-        (tournament) =>
-          tournament.status === "active" &&
-          tournament.parentTournamentID === null,
-      );
-      const [members, teams, games, tournamentCount, recentGames] =
-        await Promise.all([
-          repositories.users.count(),
-          repositories.teams.count(),
-          repositories.games.count(),
-          repositories.tournaments.count(),
-          repositories.games.list({ limit: 5 }),
-        ]);
-      return {
-        active: active ? await tournamentView(repositories, active) : null,
-        tournaments: await Promise.all(
-          tournaments.map((tournament) =>
-            tournamentView(repositories, tournament),
-          ),
-        ),
-        recentGames: await Promise.all(
-          recentGames.map((game) => gameView(repositories, game)),
-        ),
-        rankings: active
-          ? (await getRankings(repositories, active.tournamentID)).slice(0, 5)
-          : [],
-        matchups: active
-          ? await getMatchups(repositories, active.tournamentID)
-          : { matchups: [], bye: null },
-        stats: { members, teams, games, tournaments: tournamentCount },
-      };
-    });
+  /**
+   * Creates the HomeService with its required dependencies.
+   *
+   * @param store - Dedicated feature-store dependency, scoped when used inside a transaction.
+   * @param rankings - Ordered teams returned by the ranking service.
+   * @param matchups - Pairing service used to generate recommendations from calculated rankings.
+   */
+  constructor(
+    private readonly store: HomeStore,
+    private readonly rankings: RankingService,
+    private readonly matchups: MatchupService,
+  ) {}
+  /**
+   * Builds the clubhouse response and calculates rankings/pairings from the same stored snapshot.
+   *
+   * @returns Public clubhouse summaries, recent results, leaderboard, pairings, and totals.
+   */
+  async get(): Promise<HomeData> {
+    const { competition, ...view } = await this.store.get();
+    const rankings = competition
+      ? this.rankings.calculate(
+          competition.teams,
+          competition.games,
+          competition.members,
+        )
+      : [];
+    return {
+      ...view,
+      rankings: rankings.slice(0, 5),
+      matchups: competition
+        ? this.matchups.generate(rankings, competition.games)
+        : { matchups: [], bye: null },
+    };
   }
 }

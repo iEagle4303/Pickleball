@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+/**
+ * Application routes with lazy page loading, page titles, and scroll restoration.
+ */
 export const router = createRouter({
   history: createWebHistory(),
   scrollBehavior: () => ({ top: 0 }),

@@ -36,7 +36,12 @@ const options = computed(() =>
       !data.value?.members.some((member) => member.userID === player.userID),
   ),
 );
-async function loadPlayers() {
+/**
+ * Loads the public member directory for roster management.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function loadPlayers(): Promise<void> {
   try {
     players.value = await teamApi.users();
     rosterError.value = "";
@@ -44,7 +49,13 @@ async function loadPlayers() {
     rosterError.value = errorMessage(e);
   }
 }
-async function add(userID: number) {
+/**
+ * Adds a player to the roster and reloads the team profile.
+ *
+ * @param userID - Primary key of the member to add, remove, or update.
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function add(userID: number): Promise<void> {
   busy.value = true;
   try {
     await teamApi.join(id, userID);
@@ -57,7 +68,13 @@ async function add(userID: number) {
     busy.value = false;
   }
 }
-async function remove(userID: number) {
+/**
+ * Confirms membership removal and reloads the team profile after success.
+ *
+ * @param userID - Primary key of the member to add, remove, or update.
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function remove(userID: number): Promise<void> {
   if (
     !(await confirmAction(
       "Remove player from team?",

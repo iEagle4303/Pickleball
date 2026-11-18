@@ -27,7 +27,13 @@ const draft = reactive({
   playedAt: "",
 });
 let request = 0;
-async function loadTeams(id: number) {
+/**
+ * Loads participating teams for the selected tournament and ignores stale responses.
+ *
+ * @param id - Primary key of the feature's team, tournament, or result.
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function loadTeams(id: number): Promise<void> {
   const current = ++request;
   teams.value = [];
   if (!id) return;
@@ -79,7 +85,13 @@ watch(
     }
   },
 );
-function localDate(value: string) {
+/**
+ * Converts an ISO timestamp to the local datetime-local input format.
+ *
+ * @param value - ISO date or timestamp to format for display or a local datetime input.
+ * @returns A local YYYY-MM-DDTHH:mm value suitable for a datetime-local input.
+ */
+function localDate(value: string): string {
   const date = new Date(value);
   return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
     .toISOString()
@@ -88,7 +100,12 @@ function localDate(value: string) {
 const available = computed(() =>
   tournaments.value.filter((row) => row.status !== "upcoming"),
 );
-async function save() {
+/**
+ * Validates score ordering and submits a completed result to the API.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function save(): Promise<void> {
   busy.value = true;
   error.value = "";
   try {

@@ -9,11 +9,25 @@ import {
 import { dirname } from "node:path";
 import { randomUUID } from "node:crypto";
 import type { JsonDatabase } from "./JsonDatabase.js";
-/** Single-writer development store. A lock prevents two server processes from writing concurrently. */
+/**
+ * Serializes development JSON writes using a lock and atomic file replacement.
+ */
 export class JsonFileStore {
   private queue: Promise<unknown> = Promise.resolve();
+  /**
+   * Creates the JSON-backed JsonFileStore with its required dependencies.
+   *
+   * @param filename - Absolute or resolved path of the JSON database file.
+   */
   constructor(private readonly filename: string) {}
-  async initialize(seed: () => Promise<JsonDatabase>) {
+  /**
+   * Creates a missing JSON store without overwriting existing data.
+   *
+   * @param seed - Asynchronous seed factory invoked only when the JSON database file is missing.
+   * @returns Resolves when the operation completes; no result value is returned.
+   * @throws {Error} If JSON persistence or referenced-record integrity checks fail.
+   */
+  async initialize(seed: () => Promise<JsonDatabase>): Promise<void> {
     await mkdir(dirname(this.filename), { recursive: true });
     try {
       await this.read();
@@ -29,9 +43,23 @@ export class JsonFileStore {
       }
     }
   }
+  /**
+   * Reads a fresh JSON database document from disk.
+   *
+   * @returns Fresh parsed JSON document containing all development tables.
+   * @throws {Error} If JSON persistence or referenced-record integrity checks fail.
+   */
   async read(): Promise<JsonDatabase> {
     return JSON.parse(await readFile(this.filename, "utf8"));
   }
+  /**
+   * Queues and atomically commits a JSON transaction, preserving the prior file on failure.
+   *
+   * @typeParam T - Result type returned by the supplied operation.
+   * @param operation - Operation to run against the scoped data or store; its result is returned.
+   * @returns The callback's result, after the operation completes.
+   * @throws {Error} If JSON persistence or referenced-record integrity checks fail.
+   */
   transaction<T>(
     operation: (data: JsonDatabase) => T | Promise<T>,
   ): Promise<T> {

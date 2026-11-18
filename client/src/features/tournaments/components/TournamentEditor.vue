@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Tournament } from "@shared/types";
 import { reactive, ref, watch, computed } from "vue";
 import type { TournamentView } from "@shared/types";
 import { tournamentApi } from "../api/tournamentApi";
@@ -11,7 +12,12 @@ const props = defineProps<{
   tournaments: TournamentView[];
 }>();
 const emit = defineEmits<{ close: []; saved: [tournament: TournamentView] }>();
-const blank = () => ({
+/**
+ * Creates the default editable tournament fields for a new tournament.
+ *
+ * @returns Editable tournament defaults without an ID, team count, or game count.
+ */
+const blank = (): Omit<Tournament, "tournamentID"> => ({
   name: "",
   type: "ladder" as "ladder" | "bracket" | "round-robin",
   parentTournamentID: null as number | null,
@@ -41,7 +47,12 @@ watch(
     }
   },
 );
-async function save() {
+/**
+ * Submits tournament fields and reports the saved record to the parent.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function save(): Promise<void> {
   busy.value = true;
   error.value = "";
   try {

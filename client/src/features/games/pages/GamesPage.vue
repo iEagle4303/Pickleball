@@ -42,7 +42,13 @@ const filtered = computed(() => {
         : b.playedAt.localeCompare(a.playedAt),
   );
 });
-async function remove(game: GameView) {
+/**
+ * Confirms result deletion, removes the result, and reloads game history.
+ *
+ * @param game - Completed game selected for editing or deletion.
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function remove(game: GameView): Promise<void> {
   if (
     !(await confirmAction(
       "Delete game result?",

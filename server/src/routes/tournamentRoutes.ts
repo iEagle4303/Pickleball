@@ -3,9 +3,15 @@ import type { Services } from "../services/createServices.js";
 import { requirePermission as permit } from "../middleware/auth.js";
 import { endpoint } from "../controllers/leagueController.js";
 import { parseID, roundSchema } from "../services/validation.js";
+/**
+ * Creates the tournament router and applies its authentication and permission requirements.
+ *
+ * @param services - Configured resource services injected into this router.
+ * @returns An Express router containing the resource's supported endpoints.
+ */
 export function createTournamentRoutes(
   services: Pick<Services, "tournaments" | "games" | "rankings" | "matchups">,
-) {
+): Router {
   const { tournaments, games, rankings, matchups } = services;
   const router = Router();
   router.get(
@@ -35,12 +41,12 @@ export function createTournamentRoutes(
     "/:id/teams",
     permit("EDIT_TOURNAMENT"),
     endpoint((req) =>
-      tournaments.setParticipants(parseID(req.params.id), req.body),
+      tournaments.setParticipants(parseID(req.params.id), req.body?.teamIDs),
     ),
   );
   router.get(
     "/:id/games",
-    endpoint((req) => games.list({ tournamentID: parseID(req.params.id) })),
+    endpoint((req) => games.list(parseID(req.params.id))),
   );
   router.get(
     "/:id/rankings",

@@ -2,7 +2,17 @@ import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 import type { AuthService } from "../services/auth/authService.js";
 import { endpoint } from "../controllers/leagueController.js";
-export function createAuthRoutes(auth: AuthService, production: boolean) {
+/**
+ * Creates the auth router and applies its authentication and permission requirements.
+ *
+ * @param auth - Authentication service used to resolve session cookies.
+ * @param production - Whether session cookies must require HTTPS.
+ * @returns An Express router containing the resource's supported endpoints.
+ */
+export function createAuthRoutes(
+  auth: AuthService,
+  production: boolean,
+): Router {
   const router = Router();
   const cookie = {
     httpOnly: true,

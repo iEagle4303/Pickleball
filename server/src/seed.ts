@@ -1,26 +1,17 @@
-import { JsonFileStore } from "./repositories/json/JsonFileStore.js";
-import { JsonUnitOfWork } from "./repositories/json/JsonUnitOfWork.js";
+import { JsonFileStore } from "./store/json/JsonFileStore.js";
 import { config } from "./config.js";
 import { createSeedData } from "./seedData.js";
-const store = new JsonFileStore(config.dataFile);
-await store.initialize(createSeedData);
-const work = new JsonUnitOfWork(store);
-const [users, teams, tournaments, games] = await work.query((repositories) =>
-  Promise.all([
-    repositories.users.count(),
-    repositories.teams.count(),
-    repositories.tournaments.count(),
-    repositories.games.count(),
-  ]),
-);
+const file = new JsonFileStore(config.dataFile);
+await file.initialize(createSeedData);
+const data = await file.read();
 console.log("JSON database ready:", config.dataFile);
 console.log(
-  users +
+  data.users.length +
     " users, " +
-    teams +
+    data.teams.length +
     " teams, " +
-    tournaments +
+    data.tournaments.length +
     " tournaments, " +
-    games +
+    data.games.length +
     " games. Existing data is preserved.",
 );

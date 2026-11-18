@@ -49,8 +49,9 @@ const auth = useAuthStore();
             </div>
           </td>
           <td class="text-center">
-            <span class="font-bold">{{ game.scoreWinner }}</span
-            ><span class="mx-2 text-muted">–</span
+            <span class="font-bold">{{ game.scoreWinner }}</span><span
+              class="mx-2 text-muted"
+              >–</span
             ><span class="text-muted">{{ game.scoreLoser }}</span>
           </td>
           <td v-if="!compact">

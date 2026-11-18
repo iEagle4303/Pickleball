@@ -1,5 +1,11 @@
 import type { Request, Response, RequestHandler } from "express";
-/** Thin HTTP adapter: validation and business rules belong to services. */
+/**
+ * Adapts an asynchronous service action to the standard API envelope and error middleware.
+ *
+ * @param action - Service action whose result will be wrapped in the API data envelope.
+ * @param status - HTTP status code for a successful response.
+ * @returns Express middleware that resolves the request or forwards a failure to the error handler.
+ */
 export const endpoint =
   (
     action: (req: Request, res: Response) => Promise<unknown>,

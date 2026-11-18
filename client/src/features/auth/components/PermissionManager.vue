@@ -19,7 +19,12 @@ const { data, loading, error, reload } = useResource(async () => {
   ]);
   return { users, permissions };
 });
-function sync() {
+/**
+ * Copies the selected member's current permission IDs into the editable selection.
+ *
+ * @returns No result value.
+ */
+function sync(): void {
   const user = data.value?.users.find((user) => user.userID === selected.value);
   selectedIDs.value =
     data.value?.permissions
@@ -30,7 +35,12 @@ function sync() {
   errorSave.value = "";
 }
 watch(selected, sync);
-async function save() {
+/**
+ * Saves permission assignments and updates local account state when necessary.
+ *
+ * @returns Resolves after the action completes; no result value is returned.
+ */
+async function save(): Promise<void> {
   busy.value = true;
   errorSave.value = "";
   try {
@@ -51,7 +61,13 @@ async function save() {
     busy.value = false;
   }
 }
-const label = (value: string) =>
+/**
+ * Formats an internal permission name as a readable UI label.
+ *
+ * @param value - Payload or value to serialize, format, or submit.
+ * @returns The permission name with spaces and an initial capital for display.
+ */
+const label = (value: string): string =>
   value
     .toLowerCase()
     .replaceAll("_", " ")

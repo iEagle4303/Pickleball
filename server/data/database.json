@@ -1,0 +1,1251 @@
+{
+  "users": [
+    {
+      "userID": 1,
+      "username": "jamie_chen",
+      "displayName": "Jamie Chen",
+      "email": "jamie.chen@example.edu",
+      "passwordHash": "scrypt:fd359b51dc2704f4a8e18b0903ac5668:b830e0ef542cadbb89ef96de8a81124a1e60f413716b2d329dc67df17bfc51b37957e9a14985e474caa002e44a0951a9ed7d4a7a1dd6ea6c1a9c109685454b32"
+    },
+    {
+      "userID": 2,
+      "username": "alex_morgan",
+      "displayName": "Alex Morgan",
+      "email": "alex.morgan@example.edu",
+      "passwordHash": "scrypt:2865f8b4ceaec1d409e2d1b156df660c:86b3f430e5fee68991ef7b6878b21c794fd62a4e186524dab62d8f211684c4d827235ff55b1458e335e827621374628d9246a1a7256dc91ae98ea07bf5bb4c5a"
+    },
+    {
+      "userID": 3,
+      "username": "sam_rivera",
+      "displayName": "Sam Rivera",
+      "email": "sam.rivera@example.edu",
+      "passwordHash": "scrypt:5490a417836444d8e17c56d66c41417d:a51cc83b240d6bcf3a08884024875ea5ce81a6ba464dae64b2bdc5a39371e24fb1db787083d0a5242bbd127acadd55d6b6a68eacb03f8954bda9215679b1b4c5"
+    },
+    {
+      "userID": 4,
+      "username": "taylor_brooks",
+      "displayName": "Taylor Brooks",
+      "email": "taylor.brooks@example.edu",
+      "passwordHash": "scrypt:09e639b2f8388a81de5661a6a852e1f0:615f7914c89fb163fa915bc82b73a2a781b9ba835c1d97da8e37bbfe2b12017c90b5ad74cf9f2fbf208b809a0b37b52091f093d5afd2f83638813e2380dd43de"
+    },
+    {
+      "userID": 5,
+      "username": "jordan_lee",
+      "displayName": "Jordan Lee",
+      "email": "jordan.lee@example.edu",
+      "passwordHash": "scrypt:7df7fa612196b8300efafab6e8ea2532:77d3903a392f2b9979d505a2d062eb3fa2bf4e7baedb6d75e31da62bd28640a97fefda5be03a50f4b9bb585163ae0640595e6fe12f8e47d55b8913b385d2357a"
+    },
+    {
+      "userID": 6,
+      "username": "casey_wilson",
+      "displayName": "Casey Wilson",
+      "email": "casey.wilson@example.edu",
+      "passwordHash": "scrypt:276b367c78c45980202c82a3b17526c3:1e301b5ae98f46d0ed9ba9bf48b0f6303717ee729e0eba3ecfee2dc11fe14627d9f3f0119e90ec295a54eff0112b7291ab2a271588263103538c8d1916bbb3c3"
+    },
+    {
+      "userID": 7,
+      "username": "riley_patel",
+      "displayName": "Riley Patel",
+      "email": "riley.patel@example.edu",
+      "passwordHash": "scrypt:28b915b0efd101693a5d3f80a300c6c6:bea91af655f33a3a4ac7e4e71cf862e17a080b24753e95b47c62a82fec670a201f53b9d565f7366abb15c4c0d74a577ca9daa61dd0bf00a65f9f42fc64de006a"
+    },
+    {
+      "userID": 8,
+      "username": "morgan_davis",
+      "displayName": "Morgan Davis",
+      "email": "morgan.davis@example.edu",
+      "passwordHash": "scrypt:37c8b6b41ca4c2fab05934c55e55626f:cc4cf81453e36d0c9ea5dbbcc51b53ae2f556f9a15d02bf809ce46424deb1bdf803682e7a38dd75fdbcf67fd026f8ac0fd9907e84be371c96704c8b9c1c53148"
+    },
+    {
+      "userID": 9,
+      "username": "avery_kim",
+      "displayName": "Avery Kim",
+      "email": "avery.kim@example.edu",
+      "passwordHash": "scrypt:0a09c792b50fa1fe5857229f14b4c97b:30c756c02c23e253d909cca2b44786d9c5c6fcc6cb57ecac4d23e004b3b6ec90a3b00d1d3f82c38e68c28e2dd657840d6350bea6f6ab2cafaf4169f78dd1c363"
+    },
+    {
+      "userID": 10,
+      "username": "quinn_martinez",
+      "displayName": "Quinn Martinez",
+      "email": "quinn.martinez@example.edu",
+      "passwordHash": "scrypt:2f0a2461a4e0dcffe907e8bbc522abc7:71aaf300b0079c129d2d2f0934c0915df6265451172d6e95b12ac629305ed75438f575e22243cff6cff9f6d231398499465d14a50a0835a0dd3557488bf3750f"
+    },
+    {
+      "userID": 11,
+      "username": "cameron_scott",
+      "displayName": "Cameron Scott",
+      "email": "cameron.scott@example.edu",
+      "passwordHash": "scrypt:dc922229fe06cd2e4c84c3726f307d2b:b47bc9f0f4c4c70e42eac2276544b7e9635682eb31b82603e4e67708b35cb4bdc75b43f47cb9c0f3edec14968c89829cb4dec3c255b378df6384a8059a7355d2"
+    },
+    {
+      "userID": 12,
+      "username": "reese_johnson",
+      "displayName": "Reese Johnson",
+      "email": "reese.johnson@example.edu",
+      "passwordHash": "scrypt:1d4cbaa166b6bc248ec01163b499708f:bbc884f50cc6e2c2f181df875dc4ef355d090aca00e75e3cd744b692b0335ecbf4a8f15d38d4cf4eda36c4b54acd09990361d3f26939a8f5b30197f3aff6bcfa"
+    },
+    {
+      "userID": 13,
+      "username": "dakota_nguyen",
+      "displayName": "Dakota Nguyen",
+      "email": "dakota.nguyen@example.edu",
+      "passwordHash": "scrypt:561c97ad2991c6ac9402902497d1d9f3:c98e043091ce2e0a09d4d8c15e94f9545efd81f1be4fc443691789506431853bff3506ceb32053239e6a48ce6dae2a61cca8f70dd465f81394d600a981585bd9"
+    },
+    {
+      "userID": 14,
+      "username": "parker_adams",
+      "displayName": "Parker Adams",
+      "email": "parker.adams@example.edu",
+      "passwordHash": "scrypt:d0fe12d5110df3afc13f24d1f8b66636:5c4751b9156d5e3569eb1c9acf5e48123e3344278e6cd21253aee24ae6e8a71940b6ac4a79617a7299b69faa8dec96ef9e89dc2d90fcc9e4b8c4a04c76b4adb9"
+    },
+    {
+      "userID": 15,
+      "username": "skyler_thomas",
+      "displayName": "Skyler Thomas",
+      "email": "skyler.thomas@example.edu",
+      "passwordHash": "scrypt:ef6bea5ee2df0bd0bd77fd339e2a05c5:fecb25e501d6fed6d8f8ea695cf762349e2b8cec2c946638de0571c803d66bd0c1275ed1a602a9c57c56377c47c1cc7ce31a70db64f2179de67502e887e7f782"
+    },
+    {
+      "userID": 16,
+      "username": "finley_garcia",
+      "displayName": "Finley Garcia",
+      "email": "finley.garcia@example.edu",
+      "passwordHash": "scrypt:9c0367dff8ec7e5b8943b18184e75ead:34305e88f74ac8431a6208a52a940682ce87c08c3f1fca5de51e7cf926f200541c27ea482d73d5169e5188e08cdc09dea7bbb4c747f1270ce80a9ada59c21b5e"
+    },
+    {
+      "userID": 17,
+      "username": "admin",
+      "displayName": "Club Administrator",
+      "email": "admin@example.edu",
+      "passwordHash": "scrypt:0b042478afe623225c77ef0e26b2ab03:c819fd366b14c50b29a9d5fbc0822ef525342df5b4a46973a7a8cf9f34b4613d4f42540aa771f8f76d49872c3cfb4845d18a7e58453545df2d5de48748d4f451"
+    },
+    {
+      "userID": 18,
+      "username": "scorer",
+      "displayName": "Score Coordinator",
+      "email": "scorer@example.edu",
+      "passwordHash": "scrypt:9cedcd08db77d10c81e9664fc1a594e2:e187069f958157bf7e0c8c4fce2c83894e05394763a52b0bad93520ccb1d30b13e2910cf6cb4781b469e5ab0503e77bc0bf02948a11a74941c9b35325329e281"
+    }
+  ],
+  "teams": [
+    {
+      "teamID": 1,
+      "name": "Kitchen Confidential",
+      "color": "lime",
+      "createdByUserID": 1
+    },
+    {
+      "teamID": 2,
+      "name": "Dink Dynasty",
+      "color": "blue",
+      "createdByUserID": 3
+    },
+    {
+      "teamID": 3,
+      "name": "The Volley Llamas",
+      "color": "orange",
+      "createdByUserID": 5
+    },
+    {
+      "teamID": 4,
+      "name": "Net Results",
+      "color": "purple",
+      "createdByUserID": 7
+    },
+    {
+      "teamID": 5,
+      "name": "Paddle Pals",
+      "color": "teal",
+      "createdByUserID": 9
+    },
+    {
+      "teamID": 6,
+      "name": "Drop Shot Society",
+      "color": "rose",
+      "createdByUserID": 11
+    },
+    {
+      "teamID": 7,
+      "name": "No Fault Found",
+      "color": "blue",
+      "createdByUserID": 13
+    },
+    {
+      "teamID": 8,
+      "name": "The Third Shots",
+      "color": "orange",
+      "createdByUserID": 15
+    }
+  ],
+  "permissions": [
+    {
+      "permissionID": 1,
+      "description": "CREATE_TOURNAMENT"
+    },
+    {
+      "permissionID": 2,
+      "description": "EDIT_TOURNAMENT"
+    },
+    {
+      "permissionID": 3,
+      "description": "MANAGE_TEAMS"
+    },
+    {
+      "permissionID": 4,
+      "description": "ADD_GAME_RESULT"
+    },
+    {
+      "permissionID": 5,
+      "description": "EDIT_GAME_RESULT"
+    },
+    {
+      "permissionID": 6,
+      "description": "DELETE_GAME_RESULT"
+    },
+    {
+      "permissionID": 7,
+      "description": "MANAGE_PERMISSIONS"
+    }
+  ],
+  "tournaments": [
+    {
+      "tournamentID": 1,
+      "name": "Fall Ladder League",
+      "semester": "Fall 2026",
+      "status": "active",
+      "startDate": "2026-09-14",
+      "endDate": "2026-12-04",
+      "parentTournamentID": null,
+      "type": "ladder",
+      "description": "Good rallies. Great people. A little friendly competition. Partner up and work your way up the club ladder.",
+      "location": "Sports & Fitness Center · Courts 1–4"
+    },
+    {
+      "tournamentID": 2,
+      "name": "Friday Open Division",
+      "semester": "Fall 2026",
+      "status": "active",
+      "startDate": "2026-09-18",
+      "endDate": "2026-12-04",
+      "parentTournamentID": 1,
+      "type": "ladder",
+      "description": "Good rallies. Great people. A little friendly competition. Partner up and work your way up the club ladder.",
+      "location": "Sports & Fitness Center · Courts 1–4"
+    },
+    {
+      "tournamentID": 3,
+      "name": "Spring Ladder League",
+      "semester": "Spring 2026",
+      "status": "completed",
+      "startDate": "2026-02-02",
+      "endDate": "2026-05-01",
+      "parentTournamentID": null,
+      "type": "ladder",
+      "description": "Good rallies. Great people. A little friendly competition. Partner up and work your way up the club ladder.",
+      "location": "Sports & Fitness Center · Courts 1–4"
+    },
+    {
+      "tournamentID": 4,
+      "name": "Fall Ladder League",
+      "semester": "Fall 2025",
+      "status": "completed",
+      "startDate": "2025-09-15",
+      "endDate": "2025-12-05",
+      "parentTournamentID": null,
+      "type": "ladder",
+      "description": "Good rallies. Great people. A little friendly competition. Partner up and work your way up the club ladder.",
+      "location": "Sports & Fitness Center · Courts 1–4"
+    },
+    {
+      "tournamentID": 5,
+      "name": "Spring Ladder League",
+      "semester": "Spring 2027",
+      "status": "upcoming",
+      "startDate": "2027-02-01",
+      "endDate": "2027-04-30",
+      "parentTournamentID": null,
+      "type": "ladder",
+      "description": "Good rallies. Great people. A little friendly competition. Partner up and work your way up the club ladder.",
+      "location": "Sports & Fitness Center · Courts 1–4"
+    }
+  ],
+  "games": [
+    {
+      "gameID": 1,
+      "winnerTeamID": 1,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 1,
+      "playedAt": "2026-11-15T23:00:00.000Z"
+    },
+    {
+      "gameID": 2,
+      "winnerTeamID": 1,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 1,
+      "tournamentID": 1,
+      "playedAt": "2026-11-15T22:35:00.000Z"
+    },
+    {
+      "gameID": 3,
+      "winnerTeamID": 8,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 4,
+      "tournamentID": 1,
+      "playedAt": "2026-11-15T22:10:00.000Z"
+    },
+    {
+      "gameID": 4,
+      "winnerTeamID": 6,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 1,
+      "playedAt": "2026-11-15T21:45:00.000Z"
+    },
+    {
+      "gameID": 5,
+      "winnerTeamID": 8,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 1,
+      "playedAt": "2026-11-08T23:00:00.000Z"
+    },
+    {
+      "gameID": 6,
+      "winnerTeamID": 2,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 1,
+      "playedAt": "2026-11-08T22:35:00.000Z"
+    },
+    {
+      "gameID": 7,
+      "winnerTeamID": 7,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 1,
+      "playedAt": "2026-11-08T22:10:00.000Z"
+    },
+    {
+      "gameID": 8,
+      "winnerTeamID": 1,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 1,
+      "playedAt": "2026-11-08T21:45:00.000Z"
+    },
+    {
+      "gameID": 9,
+      "winnerTeamID": 6,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 1,
+      "playedAt": "2026-11-01T23:00:00.000Z"
+    },
+    {
+      "gameID": 10,
+      "winnerTeamID": 6,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 1,
+      "playedAt": "2026-11-01T22:35:00.000Z"
+    },
+    {
+      "gameID": 11,
+      "winnerTeamID": 2,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 1,
+      "playedAt": "2026-11-01T22:10:00.000Z"
+    },
+    {
+      "gameID": 12,
+      "winnerTeamID": 5,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 1,
+      "playedAt": "2026-11-01T21:45:00.000Z"
+    },
+    {
+      "gameID": 13,
+      "winnerTeamID": 1,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 3,
+      "tournamentID": 1,
+      "playedAt": "2026-10-25T23:00:00.000Z"
+    },
+    {
+      "gameID": 14,
+      "winnerTeamID": 8,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 1,
+      "playedAt": "2026-10-25T22:35:00.000Z"
+    },
+    {
+      "gameID": 15,
+      "winnerTeamID": 3,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 1,
+      "tournamentID": 1,
+      "playedAt": "2026-10-25T22:10:00.000Z"
+    },
+    {
+      "gameID": 16,
+      "winnerTeamID": 7,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 1,
+      "playedAt": "2026-10-25T21:45:00.000Z"
+    },
+    {
+      "gameID": 17,
+      "winnerTeamID": 1,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 1,
+      "tournamentID": 1,
+      "playedAt": "2026-10-18T23:00:00.000Z"
+    },
+    {
+      "gameID": 18,
+      "winnerTeamID": 2,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 4,
+      "tournamentID": 1,
+      "playedAt": "2026-10-18T22:35:00.000Z"
+    },
+    {
+      "gameID": 19,
+      "winnerTeamID": 6,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 1,
+      "playedAt": "2026-10-18T22:10:00.000Z"
+    },
+    {
+      "gameID": 20,
+      "winnerTeamID": 6,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 1,
+      "tournamentID": 1,
+      "playedAt": "2026-10-18T21:45:00.000Z"
+    },
+    {
+      "gameID": 21,
+      "winnerTeamID": 2,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 1,
+      "playedAt": "2026-10-11T23:00:00.000Z"
+    },
+    {
+      "gameID": 22,
+      "winnerTeamID": 4,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 1,
+      "playedAt": "2026-10-11T22:35:00.000Z"
+    },
+    {
+      "gameID": 23,
+      "winnerTeamID": 7,
+      "loserTeamID": 1,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 1,
+      "playedAt": "2026-10-11T22:10:00.000Z"
+    },
+    {
+      "gameID": 24,
+      "winnerTeamID": 2,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 4,
+      "tournamentID": 1,
+      "playedAt": "2026-10-11T21:45:00.000Z"
+    },
+    {
+      "gameID": 25,
+      "winnerTeamID": 7,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 3,
+      "tournamentID": 1,
+      "playedAt": "2026-10-04T23:00:00.000Z"
+    },
+    {
+      "gameID": 26,
+      "winnerTeamID": 3,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 1,
+      "playedAt": "2026-10-04T22:35:00.000Z"
+    },
+    {
+      "gameID": 27,
+      "winnerTeamID": 3,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 1,
+      "playedAt": "2026-10-04T22:10:00.000Z"
+    },
+    {
+      "gameID": 28,
+      "winnerTeamID": 5,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 6,
+      "tournamentID": 1,
+      "playedAt": "2026-10-04T21:45:00.000Z"
+    },
+    {
+      "gameID": 29,
+      "winnerTeamID": 1,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 2,
+      "playedAt": "2026-11-13T23:00:00.000Z"
+    },
+    {
+      "gameID": 30,
+      "winnerTeamID": 4,
+      "loserTeamID": 1,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 2,
+      "playedAt": "2026-11-13T22:35:00.000Z"
+    },
+    {
+      "gameID": 31,
+      "winnerTeamID": 1,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 2,
+      "playedAt": "2026-11-13T22:10:00.000Z"
+    },
+    {
+      "gameID": 32,
+      "winnerTeamID": 4,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 2,
+      "playedAt": "2026-11-13T21:45:00.000Z"
+    },
+    {
+      "gameID": 33,
+      "winnerTeamID": 2,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 6,
+      "tournamentID": 2,
+      "playedAt": "2026-11-06T23:00:00.000Z"
+    },
+    {
+      "gameID": 34,
+      "winnerTeamID": 1,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 2,
+      "playedAt": "2026-11-06T22:35:00.000Z"
+    },
+    {
+      "gameID": 35,
+      "winnerTeamID": 1,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 3,
+      "tournamentID": 2,
+      "playedAt": "2026-11-06T22:10:00.000Z"
+    },
+    {
+      "gameID": 36,
+      "winnerTeamID": 2,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 2,
+      "playedAt": "2026-11-06T21:45:00.000Z"
+    },
+    {
+      "gameID": 37,
+      "winnerTeamID": 5,
+      "loserTeamID": 1,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 3,
+      "playedAt": "2026-04-30T23:00:00.000Z"
+    },
+    {
+      "gameID": 38,
+      "winnerTeamID": 6,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 3,
+      "playedAt": "2026-04-30T22:35:00.000Z"
+    },
+    {
+      "gameID": 39,
+      "winnerTeamID": 8,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 3,
+      "playedAt": "2026-04-30T22:10:00.000Z"
+    },
+    {
+      "gameID": 40,
+      "winnerTeamID": 5,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 3,
+      "playedAt": "2026-04-30T21:45:00.000Z"
+    },
+    {
+      "gameID": 41,
+      "winnerTeamID": 4,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 3,
+      "playedAt": "2026-04-23T23:00:00.000Z"
+    },
+    {
+      "gameID": 42,
+      "winnerTeamID": 1,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 3,
+      "playedAt": "2026-04-23T22:35:00.000Z"
+    },
+    {
+      "gameID": 43,
+      "winnerTeamID": 1,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 3,
+      "playedAt": "2026-04-23T22:10:00.000Z"
+    },
+    {
+      "gameID": 44,
+      "winnerTeamID": 3,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 3,
+      "playedAt": "2026-04-23T21:45:00.000Z"
+    },
+    {
+      "gameID": 45,
+      "winnerTeamID": 5,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 3,
+      "playedAt": "2026-04-16T23:00:00.000Z"
+    },
+    {
+      "gameID": 46,
+      "winnerTeamID": 8,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 3,
+      "playedAt": "2026-04-16T22:35:00.000Z"
+    },
+    {
+      "gameID": 47,
+      "winnerTeamID": 5,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 1,
+      "tournamentID": 3,
+      "playedAt": "2026-04-16T22:10:00.000Z"
+    },
+    {
+      "gameID": 48,
+      "winnerTeamID": 1,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 4,
+      "tournamentID": 3,
+      "playedAt": "2026-04-16T21:45:00.000Z"
+    },
+    {
+      "gameID": 49,
+      "winnerTeamID": 7,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 3,
+      "playedAt": "2026-04-09T23:00:00.000Z"
+    },
+    {
+      "gameID": 50,
+      "winnerTeamID": 4,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 3,
+      "playedAt": "2026-04-09T22:35:00.000Z"
+    },
+    {
+      "gameID": 51,
+      "winnerTeamID": 5,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 3,
+      "playedAt": "2026-04-09T22:10:00.000Z"
+    },
+    {
+      "gameID": 52,
+      "winnerTeamID": 8,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 3,
+      "playedAt": "2026-04-09T21:45:00.000Z"
+    },
+    {
+      "gameID": 53,
+      "winnerTeamID": 2,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 6,
+      "tournamentID": 3,
+      "playedAt": "2026-04-02T23:00:00.000Z"
+    },
+    {
+      "gameID": 54,
+      "winnerTeamID": 1,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 3,
+      "playedAt": "2026-04-02T22:35:00.000Z"
+    },
+    {
+      "gameID": 55,
+      "winnerTeamID": 4,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 6,
+      "tournamentID": 3,
+      "playedAt": "2026-04-02T22:10:00.000Z"
+    },
+    {
+      "gameID": 56,
+      "winnerTeamID": 1,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 3,
+      "playedAt": "2026-04-02T21:45:00.000Z"
+    },
+    {
+      "gameID": 57,
+      "winnerTeamID": 2,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 3,
+      "playedAt": "2026-03-26T23:00:00.000Z"
+    },
+    {
+      "gameID": 58,
+      "winnerTeamID": 7,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 3,
+      "playedAt": "2026-03-26T22:35:00.000Z"
+    },
+    {
+      "gameID": 59,
+      "winnerTeamID": 1,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 3,
+      "playedAt": "2026-03-26T22:10:00.000Z"
+    },
+    {
+      "gameID": 60,
+      "winnerTeamID": 8,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 3,
+      "playedAt": "2026-03-26T21:45:00.000Z"
+    },
+    {
+      "gameID": 61,
+      "winnerTeamID": 4,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 4,
+      "tournamentID": 4,
+      "playedAt": "2025-12-04T23:00:00.000Z"
+    },
+    {
+      "gameID": 62,
+      "winnerTeamID": 2,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 4,
+      "tournamentID": 4,
+      "playedAt": "2025-12-04T22:35:00.000Z"
+    },
+    {
+      "gameID": 63,
+      "winnerTeamID": 2,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 4,
+      "playedAt": "2025-12-04T22:10:00.000Z"
+    },
+    {
+      "gameID": 64,
+      "winnerTeamID": 2,
+      "loserTeamID": 1,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 4,
+      "playedAt": "2025-12-04T21:45:00.000Z"
+    },
+    {
+      "gameID": 65,
+      "winnerTeamID": 1,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 4,
+      "playedAt": "2025-11-27T23:00:00.000Z"
+    },
+    {
+      "gameID": 66,
+      "winnerTeamID": 3,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 3,
+      "tournamentID": 4,
+      "playedAt": "2025-11-27T22:35:00.000Z"
+    },
+    {
+      "gameID": 67,
+      "winnerTeamID": 3,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 4,
+      "playedAt": "2025-11-27T22:10:00.000Z"
+    },
+    {
+      "gameID": 68,
+      "winnerTeamID": 7,
+      "loserTeamID": 1,
+      "scoreWinner": 11,
+      "scoreLoser": 1,
+      "tournamentID": 4,
+      "playedAt": "2025-11-27T21:45:00.000Z"
+    },
+    {
+      "gameID": 69,
+      "winnerTeamID": 8,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 4,
+      "tournamentID": 4,
+      "playedAt": "2025-11-20T23:00:00.000Z"
+    },
+    {
+      "gameID": 70,
+      "winnerTeamID": 1,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 8,
+      "tournamentID": 4,
+      "playedAt": "2025-11-20T22:35:00.000Z"
+    },
+    {
+      "gameID": 71,
+      "winnerTeamID": 1,
+      "loserTeamID": 6,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 4,
+      "playedAt": "2025-11-20T22:10:00.000Z"
+    },
+    {
+      "gameID": 72,
+      "winnerTeamID": 3,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 4,
+      "playedAt": "2025-11-20T21:45:00.000Z"
+    },
+    {
+      "gameID": 73,
+      "winnerTeamID": 2,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 4,
+      "playedAt": "2025-11-13T23:00:00.000Z"
+    },
+    {
+      "gameID": 74,
+      "winnerTeamID": 4,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 7,
+      "tournamentID": 4,
+      "playedAt": "2025-11-13T22:35:00.000Z"
+    },
+    {
+      "gameID": 75,
+      "winnerTeamID": 5,
+      "loserTeamID": 4,
+      "scoreWinner": 11,
+      "scoreLoser": 1,
+      "tournamentID": 4,
+      "playedAt": "2025-11-13T22:10:00.000Z"
+    },
+    {
+      "gameID": 76,
+      "winnerTeamID": 1,
+      "loserTeamID": 5,
+      "scoreWinner": 11,
+      "scoreLoser": 9,
+      "tournamentID": 4,
+      "playedAt": "2025-11-13T21:45:00.000Z"
+    },
+    {
+      "gameID": 77,
+      "winnerTeamID": 4,
+      "loserTeamID": 2,
+      "scoreWinner": 11,
+      "scoreLoser": 5,
+      "tournamentID": 4,
+      "playedAt": "2025-11-06T23:00:00.000Z"
+    },
+    {
+      "gameID": 78,
+      "winnerTeamID": 8,
+      "loserTeamID": 3,
+      "scoreWinner": 11,
+      "scoreLoser": 6,
+      "tournamentID": 4,
+      "playedAt": "2025-11-06T22:35:00.000Z"
+    },
+    {
+      "gameID": 79,
+      "winnerTeamID": 6,
+      "loserTeamID": 8,
+      "scoreWinner": 11,
+      "scoreLoser": 2,
+      "tournamentID": 4,
+      "playedAt": "2025-11-06T22:10:00.000Z"
+    },
+    {
+      "gameID": 80,
+      "winnerTeamID": 5,
+      "loserTeamID": 7,
+      "scoreWinner": 11,
+      "scoreLoser": 0,
+      "tournamentID": 4,
+      "playedAt": "2025-11-06T21:45:00.000Z"
+    }
+  ],
+  "userTeams": [
+    {
+      "teamID": 1,
+      "userID": 1
+    },
+    {
+      "teamID": 1,
+      "userID": 2
+    },
+    {
+      "teamID": 2,
+      "userID": 3
+    },
+    {
+      "teamID": 2,
+      "userID": 4
+    },
+    {
+      "teamID": 3,
+      "userID": 5
+    },
+    {
+      "teamID": 3,
+      "userID": 6
+    },
+    {
+      "teamID": 4,
+      "userID": 7
+    },
+    {
+      "teamID": 4,
+      "userID": 8
+    },
+    {
+      "teamID": 5,
+      "userID": 9
+    },
+    {
+      "teamID": 5,
+      "userID": 10
+    },
+    {
+      "teamID": 6,
+      "userID": 11
+    },
+    {
+      "teamID": 6,
+      "userID": 12
+    },
+    {
+      "teamID": 7,
+      "userID": 13
+    },
+    {
+      "teamID": 7,
+      "userID": 14
+    },
+    {
+      "teamID": 8,
+      "userID": 15
+    },
+    {
+      "teamID": 8,
+      "userID": 16
+    }
+  ],
+  "userPermissions": [
+    {
+      "userID": 17,
+      "permissionID": 1
+    },
+    {
+      "userID": 17,
+      "permissionID": 2
+    },
+    {
+      "userID": 17,
+      "permissionID": 3
+    },
+    {
+      "userID": 17,
+      "permissionID": 4
+    },
+    {
+      "userID": 17,
+      "permissionID": 5
+    },
+    {
+      "userID": 17,
+      "permissionID": 6
+    },
+    {
+      "userID": 17,
+      "permissionID": 7
+    },
+    {
+      "userID": 18,
+      "permissionID": 4
+    },
+    {
+      "userID": 18,
+      "permissionID": 5
+    }
+  ],
+  "teamTournaments": [
+    {
+      "teamID": 1,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 2,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 3,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 4,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 5,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 6,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 7,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 8,
+      "tournamentID": 1
+    },
+    {
+      "teamID": 1,
+      "tournamentID": 2
+    },
+    {
+      "teamID": 2,
+      "tournamentID": 2
+    },
+    {
+      "teamID": 3,
+      "tournamentID": 2
+    },
+    {
+      "teamID": 4,
+      "tournamentID": 2
+    },
+    {
+      "teamID": 1,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 2,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 3,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 4,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 5,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 6,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 7,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 8,
+      "tournamentID": 3
+    },
+    {
+      "teamID": 1,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 2,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 3,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 4,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 5,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 6,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 7,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 8,
+      "tournamentID": 4
+    },
+    {
+      "teamID": 1,
+      "tournamentID": 5
+    },
+    {
+      "teamID": 2,
+      "tournamentID": 5
+    },
+    {
+      "teamID": 3,
+      "tournamentID": 5
+    },
+    {
+      "teamID": 4,
+      "tournamentID": 5
+    },
+    {
+      "teamID": 5,
+      "tournamentID": 5
+    },
+    {
+      "teamID": 6,
+      "tournamentID": 5
+    },
+    {
+      "teamID": 7,
+      "tournamentID": 5
+    },
+    {
+      "teamID": 8,
+      "tournamentID": 5
+    }
+  ],
+  "sessions": [
+    {
+      "tokenHash": "c6623862945aa22b533d03dc39025ebb2d855d2ad0d0a6c728dee1bb8ded43a3",
+      "userID": 17,
+      "expiresAt": "2026-11-23T22:02:00.308Z"
+    }
+  ]
+}
